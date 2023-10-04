@@ -5,8 +5,8 @@
 
 Если бот во ВКонтакте не отвечает, возможно, был задан вопрос, требующий внимание сотрудника.
 
-![tg_bot_example](tg_bot_example.gif) 
-![vk_bot_example](vk_bot_example.gif) 
+Пример tg-бота  ![tg_bot_example](tg_bot_example.gif)     Пример ВК-бота  ![vk_bot_example](vk_bot_example.gif) 
+
 
 ## Как установить
 
@@ -80,12 +80,18 @@ gcloud projects add-iam-policy-binding <PROJECT_ID>  --member="serviceAccount:<S
 ```bash
 python create_intent.py --filepath <PATH-TO-YOUR-JSON-FILE>
 ```
-где <PATH-TO-YOUR-JSON-FILE> - путь до json-файла с темами, вопросами и ответами.
+где **```<PATH-TO-YOUR-JSON-FILE>```** - путь до json-файла с темами, вопросами и ответами.
 
 Посмотреть справку по аргументам
 ```bash
 python create_intent.py --help
 ```
+### Примеры
+
+* [Пример работающего бота в телеграм](https://t.me/shisterov1_bot);
+* [Пример работающего бота в VK](https://vk.com/club219380486).
+
+Intents (намерения) для указанных ботов взяты из [этого файла](https://dvmn.org/media/filer_public/a7/db/a7db66c0-1259-4dac-9726-2d1fa9c44f20/questions.json).
 
 ### Цель проекта
 
