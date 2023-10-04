@@ -47,7 +47,7 @@ if __name__ == '__main__':
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.INFO)
     logger.addHandler(LogsHandler())
-    logger.info('Бот запущен')
+    logger.info('TG бот запущен')
 
     try:
         updater = Updater(os.getenv('DF_BOT_TOKEN'))
@@ -61,4 +61,4 @@ if __name__ == '__main__':
         updater.start_polling()
         updater.idle()
     except Exception:
-        logger.exception('Возникла ошибка в боте')
+        logger.exception('Возникла ошибка в TG боте')
