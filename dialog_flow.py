@@ -37,7 +37,8 @@ class DialogFlow:
         dialogflow_answer = {
             'intent': response.query_result.intent.display_name,
             'confidence': response.query_result.intent_detection_confidence,
-            'answer': response.query_result.fulfillment_text
+            'answer': response.query_result.fulfillment_text,
+            'is_fallback': response.query_result.intent.is_fallback
         }
         return dialogflow_answer
 

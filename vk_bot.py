@@ -23,7 +23,7 @@ def echo(event, vk_api):
         flow = DialogFlow(os.getenv('PROJECT_ID'))
         flow_answer = flow.detect_intent_text(
             user_id, user_message)
-        if flow_answer:
+        if not flow_answer['is_fallback']:
             vk_api.messages.send(
                 user_id=user_id,
                 message=flow_answer['answer'],
