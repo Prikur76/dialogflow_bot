@@ -18,7 +18,7 @@
 pip install -r requirements.txt
 ```
 * Для хранения чувствительных данных (токен devman, токен основного бота, токен вспомогательного бота, chat_id пользователя) создайте файл .env 
-с переменными **`DF_BOT_TOKEN, SERVICE_BOT_TOKEN, SERVICE_CHAT_ID, VK_COMMUNITY_TOKEN, PROJECT_ID, GOOGLE_APPLICATION_CREDENTIALS``**.
+с переменными **```DF_BOT_TOKEN, SERVICE_BOT_TOKEN, SERVICE_CHAT_ID, VK_COMMUNITY_TOKEN, PROJECT_ID, GOOGLE_APPLICATION_CREDENTIALS```**.
 
 ### Этап 1. Получить все авторизационные ключи
 #### Этап 1.1 Для запуска бота в Телеграме необходимо:
