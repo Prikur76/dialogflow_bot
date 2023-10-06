@@ -67,21 +67,3 @@ class DialogFlow:
         intent_name = response.display_name
         print(f"Намерение '{intent_name}' (id {intent_id}) создано.")
         return intent_id
-
-    def list_intents(self):
-        """Возвращает список намерений указанного агента DialogFlow"""
-        intents_client = dialogflow.IntentsClient()
-        parent = dialogflow.AgentsClient.agent_path(self.project_id)
-        intents = intents_client.list_intents(request={'parent': parent})
-        return intents
-
-    def delete_intent(self, intent_id):
-        """Удаляет намерение (intent) из агента DialogFlow"""
-        intents_client = dialogflow.IntentsClient()
-        intent_path = intents_client.intent_path(self.project_id, intent_id)
-        intents_client.delete_intent(request={'name': intent_path})
-        print('Намерение id {} удалено.'.format(intent_id))
-
-    def display_info(self):
-        """Выводит информацию об агенте DialogFlow"""
-        print('Project ID: {}'.format(self.project_id))
