@@ -10,7 +10,6 @@ from telegram.ext import (Updater, CommandHandler,
 from dialog_flow import DialogFlow
 from logshandler import TelegramLogsHandler
 
-load_dotenv()
 
 logger = logging.getLogger(__name__)
 
@@ -23,12 +22,7 @@ def start(update: Update, context: CallbackContext) -> None:
         reply_markup=ForceReply(selective=True))
 
 
-def help_command(update: Update, context: CallbackContext) -> None:
-    """Отправляет привественное сообщение при команде /help"""
-    update.message.reply_text('Help!')
-
-
-def echo_with_dialogflow(update: Update, context: CallbackContext) -> None:
+def conversation(update: Update, context: CallbackContext) -> None:
     """Возвращает ответ DialogFlow."""
     session_id = update.effective_chat.id
     user_message = update.message.text
@@ -37,10 +31,10 @@ def echo_with_dialogflow(update: Update, context: CallbackContext) -> None:
         session_id, user_message)
     if flow_answer:
         update.message.reply_text(flow_answer['answer'])
-    return
 
 
 if __name__ == '__main__':
+    load_dotenv()
     admin_chat_id = os.environ.get('SERVICE_CHAT_ID')
     admin_bot = Bot(token=os.environ.get('SERVICE_BOT_TOKEN'))
     admin_bot_handler = TelegramLogsHandler(
@@ -64,9 +58,8 @@ if __name__ == '__main__':
         updater = Updater(os.environ.get('DF_BOT_TOKEN'))
         dispatcher = updater.dispatcher
         dispatcher.add_handler(CommandHandler('start', start))
-        dispatcher.add_handler(CommandHandler('help', help_command))
         dispatcher.add_handler(MessageHandler(
-            Filters.text & ~Filters.command, echo_with_dialogflow)
+            Filters.text & ~Filters.command, conversation)
         )
 
         updater.start_polling()

@@ -10,12 +10,11 @@ from telegram import Bot
 from dialog_flow import DialogFlow
 from logshandler import TelegramLogsHandler
 
-load_dotenv()
 
 logger = logging.getLogger(__name__)
 
 
-def echo(event, vk_api):
+def conversation(event, vk_api):
     user_id = event.user_id
     user_message = event.text
 
@@ -32,6 +31,7 @@ def echo(event, vk_api):
 
 
 if __name__ == '__main__':
+    load_dotenv()
     admin_chat_id = os.environ.get('SERVICE_CHAT_ID')
     admin_bot = Bot(token=os.environ.get('SERVICE_BOT_TOKEN'))
     admin_bot_handler = TelegramLogsHandler(
@@ -58,7 +58,7 @@ if __name__ == '__main__':
 
         for event in longpoll.listen():
             if event.type == VkEventType.MESSAGE_NEW and event.to_me:
-                echo(event, vk_api)
+                conversation(event, vk_api)
 
     except Exception as e:
         logger.debug('Возникла ошибка в DialogFlow vk-боте')
