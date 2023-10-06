@@ -48,6 +48,20 @@ gcloud projects add-iam-policy-binding <PROJECT_ID>  --member="serviceAccount:<S
 5) **```PROJECT_ID```**: id проекта в Dialogflow, который можно взять на вкладке 'General' в поле 'Project ID';
 6) **```GOOGLE_APPLICATION_CREDENTIALS```**: путь до json-файла с ключом авторизации в Dialogflow.
 
+### Этап 3. Запуск ботов на локальном компьютере
+
+1). Для запуска телеграм-бота в терминале введите следующую команду:
+
+```bash
+python tg_bot.py
+```
+
+2). Для запуска VK-бота в терминале введите следующую команду:
+
+```bash
+python vk_bot.py
+```
+
 ## Как создать модель "вопрос — ответ" в DialogFlow
 #### Cоздание новой темы разговора в DialogFlow:
 * На вкладке "Intents" добавить intent (тему) для бота;
