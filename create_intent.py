@@ -20,24 +20,19 @@ def main():
 
     parser = argparse.ArgumentParser(
         description='Создает новое намерение в DialogFlow')
-    parser.add_argument(
-        '--filepath', '-f', type=str, help='Путь до файла с фразами')
+    parser.add_argument('-f', type=str,
+                        help='Путь до файла с фразами', required=True)
     args = parser.parse_args()
-    filepath = args.filepath
-    if not filepath:
-        logger.error('Не указан путь до файла с фразами.')
-        return
+    filepath = args.f
 
     try:
         flow = DialogFlow(os.environ.get('PROJECT_ID'))
 
         with open(filepath, 'r', encoding='utf-8') as f:
             phrases = json.load(f)
-        for theme in phrases:
-            display_name = theme
-            training_phrases_parts = phrases[theme]['questions']
-            message_texts = phrases[theme]['answer']
-            flow.create_intent(display_name, training_phrases_parts, message_texts)
+        for theme, content in phrases.items():
+            questions, answer = content.get('questions'), content.get('answer')
+            flow.create_intent(theme, questions, answer)
         logger.info('Фразы загружены.')
     except FileNotFoundError:
         logger.error('Файл с фразами не найден.')

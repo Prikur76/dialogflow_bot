@@ -92,7 +92,7 @@ python vk_bot.py
 
 * В консоли запустить команду `python` и введите команду 
 ```bash
-python create_intent.py --filepath <PATH-TO-YOUR-JSON-FILE>
+python create_intent.py -f <PATH-TO-YOUR-JSON-FILE>
 ```
 где **```<PATH-TO-YOUR-JSON-FILE>```** - путь до json-файла с темами, вопросами и ответами.
 
