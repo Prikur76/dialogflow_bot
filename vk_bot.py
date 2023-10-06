@@ -7,20 +7,19 @@ from dotenv import load_dotenv
 from vk_api.longpoll import VkLongPoll, VkEventType
 from telegram import Bot
 
-from dialog_flow import DialogFlow
+from dialog_flow import create_api_key, detect_intent_text
 from logshandler import TelegramLogsHandler
 
 
 logger = logging.getLogger(__name__)
 
 
-def conversation(event, vk_api):
+def conversation(event, vk_api, project_id):
     user_id = event.user_id
     user_message = event.text
 
-    flow = DialogFlow(os.environ.get('PROJECT_ID'))
-    flow_answer = flow.detect_intent_text(
-        user_id, user_message)
+    flow_answer = detect_intent_text(
+        project_id, user_id, user_message)
 
     if not flow_answer['is_fallback']:
         vk_api.messages.send(
@@ -32,6 +31,7 @@ def conversation(event, vk_api):
 
 if __name__ == '__main__':
     load_dotenv()
+
     admin_chat_id = os.environ.get('SERVICE_CHAT_ID')
     admin_bot = Bot(token=os.environ.get('SERVICE_BOT_TOKEN'))
     admin_bot_handler = TelegramLogsHandler(
@@ -52,13 +52,15 @@ if __name__ == '__main__':
     logger.debug('VK бот запущен')
 
     try:
+        project_id = os.environ.get('PROJECT_ID')
+        token = create_api_key(project_id)
         vk_session = vk.VkApi(token=os.environ.get('VK_COMMUNITY_TOKEN'))
         vk_api = vk_session.get_api()
         longpoll = VkLongPoll(vk_session)
 
         for event in longpoll.listen():
             if event.type == VkEventType.MESSAGE_NEW and event.to_me:
-                conversation(event, vk_api)
+                conversation(event, vk_api, project_id)
 
     except Exception as e:
         logger.debug('Возникла ошибка в DialogFlow vk-боте')

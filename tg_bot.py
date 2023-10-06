@@ -7,7 +7,7 @@ from telegram.ext import (Updater, CommandHandler,
                           MessageHandler, Filters,
                           CallbackContext)
 
-from dialog_flow import DialogFlow
+from dialog_flow import create_api_key, detect_intent_text
 from logshandler import TelegramLogsHandler
 
 
@@ -26,15 +26,16 @@ def conversation(update: Update, context: CallbackContext) -> None:
     """Возвращает ответ DialogFlow."""
     session_id = update.effective_chat.id
     user_message = update.message.text
-    flow = DialogFlow(os.environ.get('PROJECT_ID'))
-    flow_answer = flow.detect_intent_text(
-        session_id, user_message)
+    project_id = os.environ.get('PROJECT_ID')
+    flow_answer = detect_intent_text(
+        project_id, session_id, user_message)
     if flow_answer:
         update.message.reply_text(flow_answer['answer'])
 
 
 if __name__ == '__main__':
     load_dotenv()
+
     admin_chat_id = os.environ.get('SERVICE_CHAT_ID')
     admin_bot = Bot(token=os.environ.get('SERVICE_BOT_TOKEN'))
     admin_bot_handler = TelegramLogsHandler(
@@ -55,6 +56,8 @@ if __name__ == '__main__':
     logger.debug('TG бот запущен')
 
     try:
+        project_id = os.environ.get('PROJECT_ID')
+        token = create_api_key(project_id)
         updater = Updater(os.environ.get('DF_BOT_TOKEN'))
         dispatcher = updater.dispatcher
         dispatcher.add_handler(CommandHandler('start', start))
