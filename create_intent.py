@@ -6,7 +6,7 @@ import os
 from dotenv import load_dotenv
 from google.api_core import exceptions
 
-from dialog_flow import DialogFlow
+from dialog_flow import create_intent
 
 logger = logging.getLogger(__name__)
 
@@ -26,13 +26,13 @@ def main():
     filepath = args.f
 
     try:
-        flow = DialogFlow(os.environ.get('PROJECT_ID'))
+        project_id = os.environ.get('PROJECT_ID')
 
         with open(filepath, 'r', encoding='utf-8') as f:
             phrases = json.load(f)
         for theme, content in phrases.items():
             questions, answer = content.get('questions'), content.get('answer')
-            flow.create_intent(theme, questions, answer)
+            create_intent(project_id, theme, questions, answer)
         logger.info('Фразы загружены.')
     except FileNotFoundError:
         logger.error('Файл с фразами не найден.')
