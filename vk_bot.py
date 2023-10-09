@@ -14,7 +14,7 @@ from logshandler import TelegramLogsHandler
 logger = logging.getLogger(__name__)
 
 
-def conversation(event, vk_api, project_id):
+def get_dialogflow_answer(event, vk_api, project_id):
     user_id = event.user_id
     user_message = event.text
 
@@ -60,7 +60,7 @@ if __name__ == '__main__':
 
         for event in longpoll.listen():
             if event.type == VkEventType.MESSAGE_NEW and event.to_me:
-                conversation(event, vk_api, project_id)
+                get_dialogflow_answer(event, vk_api, project_id)
 
     except Exception as e:
         logger.debug('Возникла ошибка в DialogFlow vk-боте')

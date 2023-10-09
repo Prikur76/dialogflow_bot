@@ -22,7 +22,7 @@ def start(update: Update, context: CallbackContext) -> None:
         reply_markup=ForceReply(selective=True))
 
 
-def conversation(update: Update, context: CallbackContext) -> None:
+def get_dialogflow_answer(update: Update, context: CallbackContext) -> None:
     """Возвращает ответ DialogFlow."""
     session_id = update.effective_chat.id
     user_message = update.message.text
@@ -62,7 +62,7 @@ if __name__ == '__main__':
         dispatcher = updater.dispatcher
         dispatcher.add_handler(CommandHandler('start', start))
         dispatcher.add_handler(MessageHandler(
-            Filters.text & ~Filters.command, conversation)
+            Filters.text & ~Filters.command, get_dialogflow_answer)
         )
 
         updater.start_polling()
